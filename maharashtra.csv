@@ -1,0 +1,35 @@
+City Name,Crime Index,X Coordinate (Latitude),Y Coordinate (Longitude),Cities Touching That City
+Mumbai,58,19.0760,72.8777,Thane; Navi Mumbai
+Pune,42,18.5204,73.8567,Pimpri-Chinchwad; Satara; Ahmednagar
+Nagpur,46,21.1458,79.0882,Wardha; Bhandara
+Nashik,40,19.9975,73.7898,Ahmednagar; Dhule
+Thane,52,19.2183,72.9781,Mumbai; Navi Mumbai; Kalyan
+Aurangabad,44,19.8762,75.3433,Jalna; Ahmednagar
+Solapur,48,17.6599,75.9064,Pune; Osmanabad
+Kolhapur,39,16.7050,74.2433,Sangli; Ratnagiri
+Amravati,45,20.9374,77.7796,Akola; Wardha
+Jalgaon,43,21.0077,75.5626,Dhule; Nashik
+Latur,41,18.4088,76.5604,Osmanabad; Beed
+Dhule,38,20.9042,74.7749,Jalgaon; Nashik; Nandurbar
+Ahmednagar,39,19.0948,74.7480,Pune; Nashik; Aurangabad
+Satara,35,17.6851,74.0183,Pune; Sangli
+Ratnagiri,34,16.9944,73.3000,Sindhudurg; Raigad; Kolhapur
+Sangli,37,16.8524,74.5815,Kolhapur; Satara
+Bhandara,36,21.1661,79.6509,Nagpur; Gondia
+Akola,40,20.7096,77.0082,Amravati; Washim
+Osmanabad,42,18.1860,76.0419,Solapur; Latur; Beed
+Jalna,37,19.8410,75.8864,Aurangabad; Parbhani
+Nanded,38,19.1383,77.3210,Parbhani; Hingoli
+Wardha,41,20.7453,78.6022,Nagpur; Amravati
+Chandrapur,44,19.9600,79.2961,Gadchiroli; Nagpur
+Parbhani,36,19.2694,76.7764,Nanded; Jalna
+Yavatmal,37,20.3870,78.1208,Wardha; Washim
+Beed,39,18.9891,75.7601,Osmanabad; Aurangabad
+Hingoli,34,19.7193,77.1482,Nanded; Washim
+Gondia,38,21.4592,80.1970,Bhandara; Gadchiroli
+Washim,35,20.1113,77.1334,Akola; Yavatmal
+Gadchiroli,37,20.1700,80.0050,Chandrapur; Gondia
+Sindhudurg,31,16.5210,73.6850,Ratnagiri; Goa
+Raigad,36,18.6479,73.4770,Mumbai; Pune; Ratnagiri
+Palghar,39,19.6964,72.7656,Thane; Nashik
+Nandurbar,33,21.3751,74.2428,Dhule; Jalgaon
