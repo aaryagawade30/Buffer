@@ -64,7 +64,7 @@ vector<string> bfs(const unordered_map<string, vector<string>>& adjacencyList, c
     q.push(start);
     visited.insert(start);
 
-    cout << "BFS Traversal starting from " << start << ": ";
+    cout << "The nearby cities where police stations are located from " << start << " are: ";
 
     while (!q.empty()) {
         string current = q.front();
@@ -113,8 +113,17 @@ int main() {
     cout << "Enter how many nearest police stations you want to know: ";
     cin >> noofnearbys;
     vector<string> nearby = bfs(adjList, start);
-    for(int i = 0; i < noofnearbys; i++) {
-        cout << nearby[i] << ",";
+    if(noofnearbys <= nearby.size()) {
+        for(int i = 0; i < noofnearbys; i++) {
+            cout << nearby[i] << ",";
+        }
+    }
+    else {
+        cout << "Sorry, the number of police stations nearby " << start << " are " << nearby.size() << endl;
+        cout << "They are: " << endl;
+        for(int i = 0; i < nearby.size(); i++) {
+            cout << nearby[i] << ",";
+        }
     }
 
     return 0;
