@@ -1,65 +1,130 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <unordered_map>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-// Function to load graph from CSV file
-unordered_map<string, vector<string>> loadGraph(const string &filename) {
-    unordered_map<string, vector<string>> graph;
-    ifstream file(filename);
-    string line, location, nearby_list;
-
-    if (!file.is_open()) {
-        cerr << "Error opening file: " << filename << endl;
-        exit(1);
+// Function to create adjacency list from CSV file
+unordered_map<string, vector<string>> create_adjList() {
+    ifstream iFile("pune_police_stations.csv");
+    if (!iFile) {
+        cerr << "Error: File could not be opened!" << endl;
+        return {}; // Return an empty map
     }
 
-    getline(file, line); // Skip header
-    while (getline(file, line)) {
-        stringstream ss(line);
-        getline(ss, location, ',');
-        getline(ss, nearby_list); // Read nearby locations as a single string
+    unordered_map<string, vector<string>> adjacencyList;
+    string line, location, nearby;
 
-        // Remove quotes if present
-        if (!nearby_list.empty() && nearby_list.front() == '"' && nearby_list.back() == '"') {
-            nearby_list = nearby_list.substr(1, nearby_list.size() - 2);
+    // Skip header
+    getline(iFile, line);
+
+    // Read each line
+    while (getline(iFile, line)) {
+        int loc = line.find(',');
+        if (loc == string::npos) continue; // Skip malformed lines
+
+        location = line.substr(0, loc);
+        nearby = line.substr(loc + 1);
+
+        // Remove extra spaces and quotes
+        location.erase(remove(location.begin(), location.end(), '\"'), location.end());
+        nearby.erase(remove(nearby.begin(), nearby.end(), '\"'), nearby.end());
+
+        // Ensure all locations are initialized in adjacencyList
+        if (adjacencyList.find(location) == adjacencyList.end()) {
+            adjacencyList[location] = {};
         }
-        
-        stringstream ss_nearby(nearby_list);
-        string nearby;
-        vector<string> edges;
-        
-        while (getline(ss_nearby, nearby, ',')) {
-            // Trim spaces around names
-            nearby.erase(0, nearby.find_first_not_of(" "));
-            nearby.erase(nearby.find_last_not_of(" ") + 1);
-            edges.push_back(nearby);
+
+        // Split nearby locations
+        stringstream ss(nearby);
+        string neighbor;
+        while (getline(ss, neighbor, ',')) {
+            //neighbor.erase(remove(neighbor.begin(), neighbor.end()), neighbor.end()); // Trim spaces
+
+            // Ensure neighbor is also added as a key
+            if (adjacencyList.find(neighbor) == adjacencyList.end()) {
+                adjacencyList[neighbor] = {};
+            }
+
+            adjacencyList[location].push_back(neighbor);
         }
-        
-        graph[location] = edges;
     }
 
-    file.close();
-    return graph;
+    iFile.close();
+    return adjacencyList; // Return the adjacency list
 }
 
-// Function to print the adjacency list
-void printGraph(const unordered_map<string, vector<string>> &graph) {
-    for (const auto &pair : graph) {
+// Function to perform BFS on the adjacency list
+vector<string> bfs(const unordered_map<string, vector<string>>& adjacencyList, const string& start) {
+    if (adjacencyList.find(start) == adjacencyList.end()) {
+        cout << "Error: Start location not found in adjacency list!" << endl;
+        return {};
+    }
+    vector<string> nearby;
+    queue<string> q;
+    unordered_set<string> visited;
+
+    q.push(start);
+    visited.insert(start);
+
+    cout << "The nearby cities where police stations are located from " << start << " are: ";
+
+    while (!q.empty()) {
+        string current = q.front();
+        q.pop();
+        //cout << current << ",";
+        nearby.push_back(current);
+
+        // Check if current node exists in adjacencyList before accessing it
+        if (adjacencyList.find(current) != adjacencyList.end()) {
+            for (const string& neighbor : adjacencyList.at(current)) {
+                if (visited.find(neighbor) == visited.end()) {
+                    q.push(neighbor);
+                    visited.insert(neighbor);
+                }
+            }
+        }
+    }
+
+    //cout << endl;
+    return nearby;
+}
+
+// Function to print adjacency list
+void print_adj_list(const unordered_map<string, vector<string>>& adjacencyList) {
+    for (const auto& pair : adjacencyList) {
         cout << pair.first << " -> ";
-        for (size_t i = 0; i < pair.second.size(); i++) {
-            cout << pair.second[i] << (i < pair.second.size() - 1 ? ", " : "");
+        for (const string& neighbor : pair.second) {
+            cout << neighbor << ", ";
         }
         cout << endl;
     }
 }
 
 int main() {
-    string filename = "pune_police_stations_with_distances.csv";
-    unordered_map<string, vector<string>> graph = loadGraph(filename);
-    printGraph(graph);
+    // Create adjacency list
+    unordered_map<string, vector<string>> adjList = create_adjList();
+
+    // Print adjacency list
+    //print_adj_list(adjList);
+
+    // Perform BFS starting from "Alandi"
+    string start;
+    cout << "Enter your current location: ";
+    cin >> start;
+    int noofnearbys;
+    cout << "Enter how many nearest police stations you want to know: ";
+    cin >> noofnearbys;
+    vector<string> nearby = bfs(adjList, start);
+    if(noofnearbys <= nearby.size()) {
+        for(int i = 0; i < noofnearbys; i++) {
+            cout << nearby[i] << ",";
+        }
+    }
+    else {
+        cout << "Sorry, the number of police stations nearby " << start << " are " << nearby.size() << endl;
+        cout << "They are: " << endl;
+        for(int i = 0; i < nearby.size(); i++) {
+            cout << nearby[i] << ",";
+        }
+    }
+
     return 0;
 }
