@@ -54,7 +54,7 @@ unordered_map<string, vector<string>> create_adjList() {
 // Function to perform BFS on the adjacency list
 vector<string> bfs(const unordered_map<string, vector<string>>& adjacencyList, const string& start) {
     if (adjacencyList.find(start) == adjacencyList.end()) {
-        cout << "Error: Start location not found in adjacency list!" << endl;
+        cout << "Error: Start location not found!" << endl;
         return {};
     }
     vector<string> nearby;
@@ -113,17 +113,22 @@ int main() {
     cout << "Enter how many nearest police stations you want to know: ";
     cin >> noofnearbys;
     vector<string> nearby = bfs(adjList, start);
-    if(noofnearbys <= nearby.size()) {
-        for(int i = 0; i < noofnearbys; i++) {
+    if(nearby.size() == 0) return 0;
+    else if(noofnearbys <= nearby.size()) {
+        cout << nearby[0] << ", ";
+        for(int i = 1; i < noofnearbys -1; i++) {
             cout << nearby[i] << ",";
         }
+        cout << nearby[noofnearbys -1] << endl;
     }
     else {
         cout << "Sorry, the number of police stations nearby " << start << " are " << nearby.size() << endl;
         cout << "They are: " << endl;
-        for(int i = 0; i < nearby.size(); i++) {
+        cout << nearby[0] << ", ";
+        for(int i = 1; i < noofnearbys -1; i++) {
             cout << nearby[i] << ",";
         }
+        cout << nearby[noofnearbys -1] << endl;
     }
 
     return 0;
