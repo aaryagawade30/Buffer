@@ -122,7 +122,7 @@ int main() {
 
     if (!route.empty()) {
         cout << "Safest route based on crime index: ";
-        for (const auto& loc : route) cout << loc << " -> ";
+        for (const auto& loc : route) cout << loc << " \u2192 ";
         cout << "END" << endl;
     }
 
